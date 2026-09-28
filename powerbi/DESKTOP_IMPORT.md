@@ -1,14 +1,19 @@
 # Power BI Desktop import guide
 
-This Linux environment cannot open `.pbix`. The pack below is what you open on Windows/Mac with **Power BI Desktop**.
+**Prefer the ready project:** open [`Meridian.pbip`](Meridian.pbip) — see [`OPEN_IN_DESKTOP.md`](OPEN_IN_DESKTOP.md).
+
+This Linux environment cannot run Power BI Desktop. The `.pbip` + pack below is what you open on Windows/Mac.
 
 ## What you get in `/powerbi`
 | Path | Purpose |
 |------|---------|
+| `Meridian.pbip` | **Open this** — full report + semantic model |
+| `Meridian.Report/` | 6 pages with bound visuals |
+| `Meridian.SemanticModel/` | CSV marts, measures, RLS |
 | `theme/MeridianRetailTheme.json` | Brand colours + visual defaults |
-| `dax/core_measures.dax` | KPI, MoM, RFM, cohort, Pareto measures |
-| `rls/country_roles.dax` | UK / EU / RoW / Executive roles |
-| `queries/*.pq` | Power Query M loaders for mart CSVs |
+| `dax/core_measures.dax` | Extra DAX reference |
+| `rls/country_roles.dax` | Extra RLS reference |
+| `queries/*.pq` | Power Query M loaders (manual path) |
 | `pages/PAGE_MAP.md` | Six-page report layout |
 
 ## Steps

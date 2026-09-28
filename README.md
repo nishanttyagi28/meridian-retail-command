@@ -78,9 +78,13 @@ Open [http://127.0.0.1:8847](http://127.0.0.1:8847).
 
 Committed `data/mart/*.csv` and Excel packs let the console run without rebuilding; rebuild when you change SQL.
 
-### Power BI Desktop
+### Power BI Desktop (your PC)
 
-See [`powerbi/DESKTOP_IMPORT.md`](powerbi/DESKTOP_IMPORT.md). This environment does not run Desktop; the pack is import-ready on Windows/Mac.
+Open **`powerbi/Meridian.pbip`** in Power BI Desktop → set `MartFolder` parameter to your local `data/mart` → Refresh.
+
+Full steps: [`powerbi/OPEN_IN_DESKTOP.md`](powerbi/OPEN_IN_DESKTOP.md).
+
+6 pages already built (Pulse, Markets, RFM, Cohorts, Assortment, Returns) with cards/charts/tables + theme + RLS.
 
 ### Tests
 
