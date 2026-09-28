@@ -71,10 +71,10 @@ pip install -r requirements.txt
 python scripts/download_uci_online_retail_ii.py
 
 python scripts/build_warehouse.py
-uvicorn meridian_app:app --app-dir src --host 127.0.0.1 --port 8765
+uvicorn meridian_app:app --app-dir src --host 127.0.0.1 --port 8847
 ```
 
-Open [http://127.0.0.1:8765](http://127.0.0.1:8765).
+Open [http://127.0.0.1:8847](http://127.0.0.1:8847).
 
 Committed `data/mart/*.csv` and Excel packs let the console run without rebuilding; rebuild when you change SQL.
 
