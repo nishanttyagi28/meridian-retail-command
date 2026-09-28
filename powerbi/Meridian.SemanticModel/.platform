@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Meridian"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4b0d347ac9e546e9b4d275d6912d8a5d"
+  }
+}

@@ -1,0 +1,8 @@
+role 'UK_Market'
+	modelPermission: read
+
+	tablePermission Country
+		filterExpression: 'Country'[country] = "United Kingdom"
+
+	tablePermission Returns
+		filterExpression: 'Returns'[country] = "United Kingdom"

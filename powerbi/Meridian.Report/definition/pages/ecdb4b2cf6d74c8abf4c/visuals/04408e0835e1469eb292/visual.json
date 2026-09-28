@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "04408e0835e1469eb292",
+  "position": {
+    "x": 680,
+    "y": 160,
+    "z": 3,
+    "height": 520,
+    "width": 576,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "stock_code"
+                }
+              },
+              "queryRef": "Pareto.stock_code",
+              "nativeQueryRef": "stock_code"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "description"
+                }
+              },
+              "queryRef": "Pareto.description",
+              "nativeQueryRef": "description"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "SKU Sales"
+                }
+              },
+              "queryRef": "Pareto.SKU Sales",
+              "nativeQueryRef": "SKU Sales"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "cumulative_pct"
+                }
+              },
+              "queryRef": "Pareto.cumulative_pct",
+              "nativeQueryRef": "cumulative_pct"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "is_top80_pct"
+                }
+              },
+              "queryRef": "Pareto.is_top80_pct",
+              "nativeQueryRef": "is_top80_pct"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top SKUs'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

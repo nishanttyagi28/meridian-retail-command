@@ -1,0 +1,71 @@
+table 'Cohort'
+	lineageTag: 7fc15e2e-858b-4e5b-8350-69c88ad7538b
+
+	partition 'Cohort' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_cohort_retention.csv"),
+					[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"cohort_month", type text}, {"month_number", type number}, {"active_customers", Int64.Type}, {"cohort_customers", Int64.Type}, {"retention_pct", type number}})
+			in
+				#"Changed Type"
+
+
+	column 'cohort_month'
+		dataType: string
+		lineageTag: c73a0c42-9af3-4fb1-9322-59461ae69ead
+		summarizeBy: none
+		sourceColumn: cohort_month
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'month_number'
+		dataType: doublePrecision
+		lineageTag: 888c580a-dec7-4f7e-8fe4-a44e18e2d5a7
+		summarizeBy: sum
+		sourceColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'active_customers'
+		dataType: int64
+		lineageTag: 2729df61-18de-419f-a49c-831c072ca251
+		summarizeBy: sum
+		sourceColumn: active_customers
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'cohort_customers'
+		dataType: int64
+		lineageTag: 5824b3ad-8b1f-4d0f-b2c6-de1a89390c1d
+		summarizeBy: sum
+		sourceColumn: cohort_customers
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'retention_pct'
+		dataType: doublePrecision
+		lineageTag: 467a7272-746e-4db4-aced-121c30956139
+		summarizeBy: sum
+		sourceColumn: retention_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'Retention %' = AVERAGE ( 'Cohort'[retention_pct] ) / 100
+		formatString: 0.0%
+		lineageTag: cd350372-f776-410b-a332-c2076bc88856
+
+
+	measure 'Active in Cohort Month' = SUM ( 'Cohort'[active_customers] )
+		formatString: #,##0
+		lineageTag: 8ff96a6a-376e-400b-8842-e717aa039a12
+

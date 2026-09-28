@@ -1,0 +1,7 @@
+expression MartFolder = "C:\\Repos\\meridian-retail-command\\data\\mart" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ca4452a3-03f7-44d4-a7de-58334281c40f
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text

@@ -1,0 +1,146 @@
+table 'KPI'
+	lineageTag: e9dcf561-97e5-40cf-ba69-131786a68bd8
+
+	partition 'KPI' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_kpi_snapshot.csv"),
+					[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"line_rows", Int64.Type}, {"invoices", Int64.Type}, {"customers", Int64.Type}, {"skus", Int64.Type}, {"countries", Int64.Type}, {"gross_sales_gbp", type number}, {"returns_abs_value", type number}, {"return_rate_pct", type number}, {"aov", type number}, {"guest_checkout_pct", type number}})
+			in
+				#"Changed Type"
+
+
+	column 'line_rows'
+		dataType: int64
+		lineageTag: 0f2bd1e9-062f-4666-9715-e3aaf729f498
+		summarizeBy: sum
+		sourceColumn: line_rows
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'invoices'
+		dataType: int64
+		lineageTag: f3990a7d-e9a7-4f38-8f81-25092ea9afcc
+		summarizeBy: sum
+		sourceColumn: invoices
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'customers'
+		dataType: int64
+		lineageTag: 86746bbc-e991-47af-a5c6-6142b84efc6e
+		summarizeBy: sum
+		sourceColumn: customers
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'skus'
+		dataType: int64
+		lineageTag: c3822820-edab-4015-845d-146d7e36de3c
+		summarizeBy: sum
+		sourceColumn: skus
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'countries'
+		dataType: int64
+		lineageTag: ba7e107e-c9bb-476b-95be-0de028fd6f7c
+		summarizeBy: sum
+		sourceColumn: countries
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'gross_sales_gbp'
+		dataType: doublePrecision
+		lineageTag: 19c5eb06-5fee-4c7f-9218-8e0f9be77f8e
+		summarizeBy: sum
+		sourceColumn: gross_sales_gbp
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'returns_abs_value'
+		dataType: doublePrecision
+		lineageTag: 940e4103-986e-41dd-baf7-789cd2baa15e
+		summarizeBy: sum
+		sourceColumn: returns_abs_value
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'return_rate_pct'
+		dataType: doublePrecision
+		lineageTag: 1c608089-a00f-4e7b-a6f0-6e0e4550e046
+		summarizeBy: sum
+		sourceColumn: return_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'aov'
+		dataType: doublePrecision
+		lineageTag: 941abc65-b11f-4fe3-ac7b-b6d2fe7881fd
+		summarizeBy: sum
+		sourceColumn: aov
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'guest_checkout_pct'
+		dataType: doublePrecision
+		lineageTag: 4bbd57be-6c72-4150-ac07-0d70ed0094cb
+		summarizeBy: sum
+		sourceColumn: guest_checkout_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'Gross Sales GBP' = MAX ( 'KPI'[gross_sales_gbp] )
+		formatString: £#,##0
+		lineageTag: 46d4c840-251d-478c-a3d6-58cbc7e18900
+
+
+	measure 'Returns GBP' = MAX ( 'KPI'[returns_abs_value] )
+		formatString: £#,##0
+		lineageTag: df2cc13f-c3e5-4cb2-92c3-3ea6919791e5
+
+
+	measure 'Return Rate %' = MAX ( 'KPI'[return_rate_pct] ) / 100
+		formatString: 0.0%
+		lineageTag: f8696de2-0800-4d11-91e8-88ff89d47b7e
+
+
+	measure 'AOV GBP' = MAX ( 'KPI'[aov] )
+		formatString: £#,##0.00
+		lineageTag: 6f93a93e-de41-47a7-9f86-9b97c34a92a3
+
+
+	measure 'Customers' = MAX ( 'KPI'[customers] )
+		formatString: #,##0
+		lineageTag: ddd1ceed-2df6-472f-b7f4-fc85d7e9878f
+
+
+	measure 'SKUs' = MAX ( 'KPI'[skus] )
+		formatString: #,##0
+		lineageTag: fb0f5842-dd70-432c-a873-716b348c2bfc
+
+
+	measure 'Guest Checkout %' = MAX ( 'KPI'[guest_checkout_pct] ) / 100
+		formatString: 0.0%
+		lineageTag: dccec76e-48d7-46a1-b5da-c1725d16c6a8
+
+
+	measure 'Invoices' = MAX ( 'KPI'[invoices] )
+		formatString: #,##0
+		lineageTag: c132e9f0-39ee-4d22-9c90-b23eae69bdbb
+

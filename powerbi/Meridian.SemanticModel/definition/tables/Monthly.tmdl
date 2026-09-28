@@ -1,0 +1,85 @@
+table 'Monthly'
+	lineageTag: cd4ea2d4-bb98-4cf9-86a5-870e2060045c
+
+	partition 'Monthly' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_monthly_trend.csv"),
+					[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"invoice_month", type text}, {"sales", type number}, {"returns_abs", type number}, {"invoices", Int64.Type}, {"customers", Int64.Type}, {"aov", type number}})
+			in
+				#"Changed Type"
+
+
+	column 'invoice_month'
+		dataType: string
+		lineageTag: f36dcb76-358f-4ba4-a261-a52f3f8ce129
+		summarizeBy: none
+		sourceColumn: invoice_month
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'sales'
+		dataType: doublePrecision
+		lineageTag: 995ca72b-ae4e-4a9a-944a-4a1b464291ee
+		summarizeBy: sum
+		sourceColumn: sales
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'returns_abs'
+		dataType: doublePrecision
+		lineageTag: 409560af-1b52-4c54-a7e9-130508571adf
+		summarizeBy: sum
+		sourceColumn: returns_abs
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'invoices'
+		dataType: int64
+		lineageTag: f593e851-36d7-4be5-a8b3-58bbef6025a4
+		summarizeBy: sum
+		sourceColumn: invoices
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'customers'
+		dataType: int64
+		lineageTag: c75ab383-9e1a-488e-9659-2e2532cac394
+		summarizeBy: sum
+		sourceColumn: customers
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'aov'
+		dataType: doublePrecision
+		lineageTag: b26a04d6-58dd-4ac2-bcac-7c7bf9a5ffdb
+		summarizeBy: sum
+		sourceColumn: aov
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'Monthly Sales' = SUM ( 'Monthly'[sales] )
+		formatString: £#,##0
+		lineageTag: 72512a0f-75fe-489c-a351-cb81d368d0ca
+
+
+	measure 'Monthly Returns' = SUM ( 'Monthly'[returns_abs] )
+		formatString: £#,##0
+		lineageTag: d0e407e8-409b-4377-afdb-04944fe07e1f
+
+
+	measure 'Monthly Invoices' = SUM ( 'Monthly'[invoices] )
+		formatString: #,##0
+		lineageTag: d993c979-0fd0-492b-b810-6b7195d252cc
+

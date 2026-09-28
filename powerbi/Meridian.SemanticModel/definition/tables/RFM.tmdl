@@ -1,0 +1,130 @@
+table 'RFM'
+	lineageTag: ad6ef94a-80d1-4a90-8a08-10261f0edb7e
+
+	partition 'RFM' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_customer_rfm.csv"),
+					[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"customer_id", type text}, {"last_purchase", type text}, {"recency_days", Int64.Type}, {"frequency", Int64.Type}, {"monetary", type number}, {"returns_abs", type number}, {"r_score", Int64.Type}, {"f_score", Int64.Type}, {"m_score", Int64.Type}, {"rfm_sum", Int64.Type}, {"rfm_segment", type text}})
+			in
+				#"Changed Type"
+
+
+	column 'customer_id'
+		dataType: string
+		lineageTag: 423d823d-571e-4ed7-9053-c7558b344aaa
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'last_purchase'
+		dataType: string
+		lineageTag: 68866950-ad72-436c-9939-5d77f077ce9c
+		summarizeBy: none
+		sourceColumn: last_purchase
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'recency_days'
+		dataType: int64
+		lineageTag: 92088ba0-e54c-40d3-b407-80ce9e9e8ae0
+		summarizeBy: none
+		sourceColumn: recency_days
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'frequency'
+		dataType: int64
+		lineageTag: a3179da6-7b47-4dfb-960c-da1b031b282b
+		summarizeBy: sum
+		sourceColumn: frequency
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'monetary'
+		dataType: doublePrecision
+		lineageTag: 8ae41062-224b-4a92-85ee-27515509c50b
+		summarizeBy: sum
+		sourceColumn: monetary
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'returns_abs'
+		dataType: doublePrecision
+		lineageTag: 3c6915c4-89fa-4ae2-a819-af9a3925affe
+		summarizeBy: sum
+		sourceColumn: returns_abs
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'r_score'
+		dataType: int64
+		lineageTag: f4666cb8-e927-4357-b59a-ac233c746fea
+		summarizeBy: none
+		sourceColumn: r_score
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'f_score'
+		dataType: int64
+		lineageTag: c82d1f96-98fc-445e-ae3d-3693b7d24a59
+		summarizeBy: none
+		sourceColumn: f_score
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'm_score'
+		dataType: int64
+		lineageTag: 3a8a727c-b90a-4220-88d7-df0553cd5ca6
+		summarizeBy: none
+		sourceColumn: m_score
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'rfm_sum'
+		dataType: int64
+		lineageTag: ebc3d7f2-044d-4560-9984-d2768a4d9576
+		summarizeBy: none
+		sourceColumn: rfm_sum
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'rfm_segment'
+		dataType: string
+		lineageTag: 5839d7c5-4d95-4d07-aa53-9143f979b9d1
+		summarizeBy: none
+		sourceColumn: rfm_segment
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'RFM Customers' = DISTINCTCOUNT ( 'RFM'[customer_id] )
+		formatString: #,##0
+		lineageTag: a314dc71-fe91-4a51-aaaf-1ba948895ebb
+
+
+	measure 'RFM Revenue' = SUM ( 'RFM'[monetary] )
+		formatString: £#,##0
+		lineageTag: aae04146-e3d5-4b85-aad0-f692042a4e2d
+
+
+	measure 'Champions Revenue' = CALCULATE ( SUM ( 'RFM'[monetary] ), 'RFM'[rfm_segment] = "Champions" )
+		formatString: £#,##0
+		lineageTag: 598cd634-29d6-458d-9351-d30ee92224d2
+

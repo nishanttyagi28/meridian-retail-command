@@ -1,0 +1,89 @@
+table 'Pareto'
+	lineageTag: 3641d34a-4ca9-4ac9-90b5-3fc18445a6ad
+
+	partition 'Pareto' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_product_pareto.csv"),
+					[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"stock_code", type text}, {"description", type text}, {"sales", type number}, {"units", Int64.Type}, {"pct_of_sales", type number}, {"cumulative_pct", type number}, {"is_top80_pct", Int64.Type}})
+			in
+				#"Changed Type"
+
+
+	column 'stock_code'
+		dataType: string
+		lineageTag: 9b121a4b-46f3-42e6-93fc-474539d6f994
+		summarizeBy: none
+		sourceColumn: stock_code
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'description'
+		dataType: string
+		lineageTag: e264cbbd-bb52-45f8-912d-1d624782987e
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'sales'
+		dataType: doublePrecision
+		lineageTag: 24f697d4-bd20-4a6b-a834-71711d9befce
+		summarizeBy: sum
+		sourceColumn: sales
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'units'
+		dataType: int64
+		lineageTag: 4f7012a1-27a2-4f14-90c2-1c0a38c16ea1
+		summarizeBy: sum
+		sourceColumn: units
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'pct_of_sales'
+		dataType: doublePrecision
+		lineageTag: af00936d-0090-4f23-9173-5aa0529b2f9c
+		summarizeBy: sum
+		sourceColumn: pct_of_sales
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'cumulative_pct'
+		dataType: doublePrecision
+		lineageTag: 12c73ecf-b42a-4fb8-a903-0a8e47f18171
+		summarizeBy: sum
+		sourceColumn: cumulative_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'is_top80_pct'
+		dataType: int64
+		lineageTag: ab703d07-0a62-4cd4-9334-4f55adfad9e8
+		summarizeBy: none
+		sourceColumn: is_top80_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'SKU Sales' = SUM ( 'Pareto'[sales] )
+		formatString: £#,##0
+		lineageTag: daf3488e-f737-4d5d-9be5-c3c083894013
+
+
+	measure 'Top 80 SKU Count' = CALCULATE ( DISTINCTCOUNT ( 'Pareto'[stock_code] ), 'Pareto'[is_top80_pct] = 1 )
+		formatString: #,##0
+		lineageTag: dc786fed-5d57-4eb1-bbf5-0d4b6078bc81
+

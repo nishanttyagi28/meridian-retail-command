@@ -1,0 +1,82 @@
+{
+  "name": "Meridian Retail Command",
+  "dataColors": [
+    "#0E7C7B",
+    "#1C2541",
+    "#D97706",
+    "#3A7CA5",
+    "#5C6B73",
+    "#B85C38",
+    "#2A9D8F",
+    "#8B9DAF"
+  ],
+  "foreground": "#E8EEF2",
+  "background": "#12161C",
+  "backgroundLight": "#1A222D",
+  "backgroundNeutral": "#243040",
+  "tableAccent": "#0E7C7B",
+  "good": "#0E7C7B",
+  "neutral": "#D97706",
+  "bad": "#B85C38",
+  "maximum": "#0E7C7B",
+  "center": "#D97706",
+  "minimum": "#B85C38",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#E8EEF2"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#E8EEF2"
+    },
+    "header": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#A8B4C0"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#8B9DAF"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#1A222D"
+              }
+            }
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#2A3544"
+              }
+            },
+            "radius": 2
+          }
+        ],
+        "title": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#E8EEF2"
+              }
+            },
+            "fontSize": 13
+          }
+        ]
+      }
+    }
+  }
+}

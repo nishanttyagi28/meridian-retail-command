@@ -1,0 +1,125 @@
+table 'Returns'
+	lineageTag: cf383c9a-aaad-46a3-81d2-130b34fe63ac
+
+	partition 'Returns' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_returns_leakage.csv"),
+					[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"invoice_id", type text}, {"invoice_date", type text}, {"stock_code", type text}, {"description", type text}, {"customer_id", type text}, {"country", type text}, {"qty", Int64.Type}, {"unit_price", type number}, {"return_value", type number}, {"is_cancellation", Int64.Type}, {"is_return_qty", Int64.Type}})
+			in
+				#"Changed Type"
+
+
+	column 'invoice_id'
+		dataType: string
+		lineageTag: a5ee61b2-eec1-40ae-91cf-3e16fc974f8d
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'invoice_date'
+		dataType: string
+		lineageTag: 34e78e15-5c89-4a3f-9ea4-fde39ad085df
+		summarizeBy: none
+		sourceColumn: invoice_date
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'stock_code'
+		dataType: string
+		lineageTag: 65404292-b512-4443-a649-c126d061a32c
+		summarizeBy: none
+		sourceColumn: stock_code
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'description'
+		dataType: string
+		lineageTag: ff6bffaf-e0a1-47e9-9aa5-01398a8885a9
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'customer_id'
+		dataType: string
+		lineageTag: dcb97840-6caa-4c17-93d5-e20c1173bc86
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'country'
+		dataType: string
+		lineageTag: 6b9eeff9-9742-4e44-b197-1f7f3b427a4f
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'qty'
+		dataType: int64
+		lineageTag: dcda3815-e46d-4c5d-9436-5220428dab60
+		summarizeBy: none
+		sourceColumn: qty
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'unit_price'
+		dataType: doublePrecision
+		lineageTag: 4b2558c0-0054-44dd-9ebd-6e7c20891e9c
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'return_value'
+		dataType: doublePrecision
+		lineageTag: fb2e9b45-7648-4221-9409-6bc03422718b
+		summarizeBy: sum
+		sourceColumn: return_value
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'is_cancellation'
+		dataType: int64
+		lineageTag: f8560821-874c-4443-9998-1db1cf863129
+		summarizeBy: none
+		sourceColumn: is_cancellation
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'is_return_qty'
+		dataType: int64
+		lineageTag: e8ddda13-5876-4c2d-b9b9-4aea40a303d8
+		summarizeBy: none
+		sourceColumn: is_return_qty
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'Return Value' = SUM ( 'Returns'[return_value] )
+		formatString: £#,##0.00
+		lineageTag: e26ed9d8-c75a-437b-8ffd-7ae844ea64f2
+
+
+	measure 'Return Lines' = COUNTROWS ( 'Returns' )
+		formatString: #,##0
+		lineageTag: 9c662df2-2145-4015-b7a5-6b4eb4d83ed9
+

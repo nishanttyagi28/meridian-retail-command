@@ -1,0 +1,94 @@
+table 'Country'
+	lineageTag: 81f22316-744f-4d22-9039-17fce0d48671
+
+	partition 'Country' = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents(MartFolder & "\\mart_country_performance.csv"),
+					[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"country", type text}, {"customers", Int64.Type}, {"invoices", Int64.Type}, {"sales", type number}, {"returns_abs", type number}, {"return_rate_pct", type number}, {"aov", type number}})
+			in
+				#"Changed Type"
+
+
+	column 'country'
+		dataType: string
+		lineageTag: 4afe4a23-2206-45d4-8d1e-663895f6ef4e
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'customers'
+		dataType: int64
+		lineageTag: aa5fac01-55b9-4b15-ad21-983c3381909f
+		summarizeBy: sum
+		sourceColumn: customers
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'invoices'
+		dataType: int64
+		lineageTag: 2e2a9a20-5ca4-4fc4-95bd-080aba913d66
+		summarizeBy: sum
+		sourceColumn: invoices
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'sales'
+		dataType: doublePrecision
+		lineageTag: 4b40e38d-d83a-44f9-a561-159020ca391e
+		summarizeBy: sum
+		sourceColumn: sales
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'returns_abs'
+		dataType: doublePrecision
+		lineageTag: 39a8dc51-6f0f-48ba-be22-999fc4455e4c
+		summarizeBy: sum
+		sourceColumn: returns_abs
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'return_rate_pct'
+		dataType: doublePrecision
+		lineageTag: ee42144e-1a29-492c-af1f-4df71c93572c
+		summarizeBy: sum
+		sourceColumn: return_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+
+	column 'aov'
+		dataType: doublePrecision
+		lineageTag: b9d36ed1-e62e-466d-8f06-66f5b79df1f6
+		summarizeBy: sum
+		sourceColumn: aov
+
+		annotation SummarizationSetBy = Automatic
+
+
+	measure 'Country Sales' = SUM ( 'Country'[sales] )
+		formatString: £#,##0
+		lineageTag: 82b7faf8-ea0e-40e4-a14a-faad7207d035
+
+
+	measure 'Country Return Rate' = DIVIDE ( SUM ( 'Country'[returns_abs] ), SUM ( 'Country'[sales] ), 0 )
+		formatString: 0.0%
+		lineageTag: e310fddb-25ea-4734-9e4d-285977983dc9
+
+
+	measure 'Country AOV' = AVERAGE ( 'Country'[aov] )
+		formatString: £#,##0.00
+		lineageTag: 153f3795-fe39-48df-98cd-1fdf892295f7
+

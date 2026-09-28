@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "585b96ddd11b40ac8971",
+  "position": {
+    "x": 24,
+    "y": 160,
+    "z": 2,
+    "height": 520,
+    "width": 640,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "stock_code"
+                }
+              },
+              "queryRef": "Pareto.stock_code",
+              "nativeQueryRef": "stock_code",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Pareto"
+                    }
+                  },
+                  "Property": "SKU Sales"
+                }
+              },
+              "queryRef": "Pareto.SKU Sales",
+              "nativeQueryRef": "SKU Sales"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'SKU sales (Pareto view)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
