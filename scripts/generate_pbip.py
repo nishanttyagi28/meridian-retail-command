@@ -341,7 +341,7 @@ def render_table(
     m_cols = [(c[0], c[2]) for c in columns]
     parts.append(csv_partition(name, filename, m_cols))
     for cname, dtype, _ in columns:
-        summarize = "sum" if dtype == "doublePrecision" else "none"
+        summarize = "sum" if dtype == "double" else "none"
         if cname in ("customers", "invoices", "frequency", "units", "active_customers", "cohort_customers", "skus", "line_rows", "countries"):
             summarize = "sum"
         parts.append(column_block(cname, dtype, summarize))
@@ -412,11 +412,11 @@ def build_model() -> None:
                 ("customers", "int64", "Int64.Type"),
                 ("skus", "int64", "Int64.Type"),
                 ("countries", "int64", "Int64.Type"),
-                ("gross_sales_gbp", "doublePrecision", "type number"),
-                ("returns_abs_value", "doublePrecision", "type number"),
-                ("return_rate_pct", "doublePrecision", "type number"),
-                ("aov", "doublePrecision", "type number"),
-                ("guest_checkout_pct", "doublePrecision", "type number"),
+                ("gross_sales_gbp", "double", "type number"),
+                ("returns_abs_value", "double", "type number"),
+                ("return_rate_pct", "double", "type number"),
+                ("aov", "double", "type number"),
+                ("guest_checkout_pct", "double", "type number"),
             ],
             [
                 ("Gross Sales GBP", "MAX ( 'KPI'[gross_sales_gbp] )", "£#,##0"),
@@ -434,11 +434,11 @@ def build_model() -> None:
             "mart_monthly_trend.csv",
             [
                 ("invoice_month", "string", "type text"),
-                ("sales", "doublePrecision", "type number"),
-                ("returns_abs", "doublePrecision", "type number"),
+                ("sales", "double", "type number"),
+                ("returns_abs", "double", "type number"),
                 ("invoices", "int64", "Int64.Type"),
                 ("customers", "int64", "Int64.Type"),
-                ("aov", "doublePrecision", "type number"),
+                ("aov", "double", "type number"),
             ],
             [
                 ("Monthly Sales", "SUM ( 'Monthly'[sales] )", "£#,##0"),
@@ -453,10 +453,10 @@ def build_model() -> None:
                 ("country", "string", "type text"),
                 ("customers", "int64", "Int64.Type"),
                 ("invoices", "int64", "Int64.Type"),
-                ("sales", "doublePrecision", "type number"),
-                ("returns_abs", "doublePrecision", "type number"),
-                ("return_rate_pct", "doublePrecision", "type number"),
-                ("aov", "doublePrecision", "type number"),
+                ("sales", "double", "type number"),
+                ("returns_abs", "double", "type number"),
+                ("return_rate_pct", "double", "type number"),
+                ("aov", "double", "type number"),
             ],
             [
                 ("Country Sales", "SUM ( 'Country'[sales] )", "£#,##0"),
@@ -472,8 +472,8 @@ def build_model() -> None:
                 ("last_purchase", "string", "type text"),
                 ("recency_days", "int64", "Int64.Type"),
                 ("frequency", "int64", "Int64.Type"),
-                ("monetary", "doublePrecision", "type number"),
-                ("returns_abs", "doublePrecision", "type number"),
+                ("monetary", "double", "type number"),
+                ("returns_abs", "double", "type number"),
                 ("r_score", "int64", "Int64.Type"),
                 ("f_score", "int64", "Int64.Type"),
                 ("m_score", "int64", "Int64.Type"),
@@ -491,10 +491,10 @@ def build_model() -> None:
             "mart_cohort_retention.csv",
             [
                 ("cohort_month", "string", "type text"),
-                ("month_number", "doublePrecision", "type number"),
+                ("month_number", "double", "type number"),
                 ("active_customers", "int64", "Int64.Type"),
                 ("cohort_customers", "int64", "Int64.Type"),
-                ("retention_pct", "doublePrecision", "type number"),
+                ("retention_pct", "double", "type number"),
             ],
             [
                 ("Retention %", "AVERAGE ( 'Cohort'[retention_pct] ) / 100", "0.0%"),
@@ -507,10 +507,10 @@ def build_model() -> None:
             [
                 ("stock_code", "string", "type text"),
                 ("description", "string", "type text"),
-                ("sales", "doublePrecision", "type number"),
+                ("sales", "double", "type number"),
                 ("units", "int64", "Int64.Type"),
-                ("pct_of_sales", "doublePrecision", "type number"),
-                ("cumulative_pct", "doublePrecision", "type number"),
+                ("pct_of_sales", "double", "type number"),
+                ("cumulative_pct", "double", "type number"),
                 ("is_top80_pct", "int64", "Int64.Type"),
             ],
             [
@@ -529,8 +529,8 @@ def build_model() -> None:
                 ("customer_id", "string", "type text"),
                 ("country", "string", "type text"),
                 ("qty", "int64", "Int64.Type"),
-                ("unit_price", "doublePrecision", "type number"),
-                ("return_value", "doublePrecision", "type number"),
+                ("unit_price", "double", "type number"),
+                ("return_value", "double", "type number"),
                 ("is_cancellation", "int64", "Int64.Type"),
                 ("is_return_qty", "int64", "Int64.Type"),
             ],

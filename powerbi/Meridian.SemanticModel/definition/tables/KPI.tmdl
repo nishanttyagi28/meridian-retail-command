@@ -61,7 +61,7 @@ table 'KPI'
 
 
 	column 'gross_sales_gbp'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 19c5eb06-5fee-4c7f-9218-8e0f9be77f8e
 		summarizeBy: sum
 		sourceColumn: gross_sales_gbp
@@ -70,7 +70,7 @@ table 'KPI'
 
 
 	column 'returns_abs_value'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 940e4103-986e-41dd-baf7-789cd2baa15e
 		summarizeBy: sum
 		sourceColumn: returns_abs_value
@@ -79,7 +79,7 @@ table 'KPI'
 
 
 	column 'return_rate_pct'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 1c608089-a00f-4e7b-a6f0-6e0e4550e046
 		summarizeBy: sum
 		sourceColumn: return_rate_pct
@@ -88,7 +88,7 @@ table 'KPI'
 
 
 	column 'aov'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 941abc65-b11f-4fe3-ac7b-b6d2fe7881fd
 		summarizeBy: sum
 		sourceColumn: aov
@@ -97,7 +97,7 @@ table 'KPI'
 
 
 	column 'guest_checkout_pct'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 4bbd57be-6c72-4150-ac07-0d70ed0094cb
 		summarizeBy: sum
 		sourceColumn: guest_checkout_pct

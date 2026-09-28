@@ -25,7 +25,7 @@ table 'Cohort'
 
 
 	column 'month_number'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 888c580a-dec7-4f7e-8fe4-a44e18e2d5a7
 		summarizeBy: sum
 		sourceColumn: month_number
@@ -52,7 +52,7 @@ table 'Cohort'
 
 
 	column 'retention_pct'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 467a7272-746e-4db4-aced-121c30956139
 		summarizeBy: sum
 		sourceColumn: retention_pct

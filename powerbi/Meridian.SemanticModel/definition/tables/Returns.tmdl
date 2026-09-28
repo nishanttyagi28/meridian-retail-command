@@ -79,7 +79,7 @@ table 'Returns'
 
 
 	column 'unit_price'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 4b2558c0-0054-44dd-9ebd-6e7c20891e9c
 		summarizeBy: sum
 		sourceColumn: unit_price
@@ -88,7 +88,7 @@ table 'Returns'
 
 
 	column 'return_value'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: fb2e9b45-7648-4221-9409-6bc03422718b
 		summarizeBy: sum
 		sourceColumn: return_value

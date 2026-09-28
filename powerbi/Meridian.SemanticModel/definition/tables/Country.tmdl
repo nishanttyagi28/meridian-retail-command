@@ -43,7 +43,7 @@ table 'Country'
 
 
 	column 'sales'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 4b40e38d-d83a-44f9-a561-159020ca391e
 		summarizeBy: sum
 		sourceColumn: sales
@@ -52,7 +52,7 @@ table 'Country'
 
 
 	column 'returns_abs'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 39a8dc51-6f0f-48ba-be22-999fc4455e4c
 		summarizeBy: sum
 		sourceColumn: returns_abs
@@ -61,7 +61,7 @@ table 'Country'
 
 
 	column 'return_rate_pct'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: ee42144e-1a29-492c-af1f-4df71c93572c
 		summarizeBy: sum
 		sourceColumn: return_rate_pct
@@ -70,7 +70,7 @@ table 'Country'
 
 
 	column 'aov'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: b9d36ed1-e62e-466d-8f06-66f5b79df1f6
 		summarizeBy: sum
 		sourceColumn: aov

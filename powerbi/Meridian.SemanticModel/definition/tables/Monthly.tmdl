@@ -25,7 +25,7 @@ table 'Monthly'
 
 
 	column 'sales'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 995ca72b-ae4e-4a9a-944a-4a1b464291ee
 		summarizeBy: sum
 		sourceColumn: sales
@@ -34,7 +34,7 @@ table 'Monthly'
 
 
 	column 'returns_abs'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 409560af-1b52-4c54-a7e9-130508571adf
 		summarizeBy: sum
 		sourceColumn: returns_abs
@@ -61,7 +61,7 @@ table 'Monthly'
 
 
 	column 'aov'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: b26a04d6-58dd-4ac2-bcac-7c7bf9a5ffdb
 		summarizeBy: sum
 		sourceColumn: aov

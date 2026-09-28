@@ -52,7 +52,7 @@ table 'RFM'
 
 
 	column 'monetary'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 8ae41062-224b-4a92-85ee-27515509c50b
 		summarizeBy: sum
 		sourceColumn: monetary
@@ -61,7 +61,7 @@ table 'RFM'
 
 
 	column 'returns_abs'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 3c6915c4-89fa-4ae2-a819-af9a3925affe
 		summarizeBy: sum
 		sourceColumn: returns_abs

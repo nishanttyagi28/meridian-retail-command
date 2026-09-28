@@ -34,7 +34,7 @@ table 'Pareto'
 
 
 	column 'sales'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 24f697d4-bd20-4a6b-a834-71711d9befce
 		summarizeBy: sum
 		sourceColumn: sales
@@ -52,7 +52,7 @@ table 'Pareto'
 
 
 	column 'pct_of_sales'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: af00936d-0090-4f23-9173-5aa0529b2f9c
 		summarizeBy: sum
 		sourceColumn: pct_of_sales
@@ -61,7 +61,7 @@ table 'Pareto'
 
 
 	column 'cumulative_pct'
-		dataType: doublePrecision
+		dataType: double
 		lineageTag: 12c73ecf-b42a-4fb8-a903-0a8e47f18171
 		summarizeBy: sum
 		sourceColumn: cumulative_pct
