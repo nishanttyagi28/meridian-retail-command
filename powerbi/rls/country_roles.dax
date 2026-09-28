@@ -1,0 +1,42 @@
+-- Row-level security by country (market analyst / regional manager pattern)
+-- Desktop: Modeling → Manage roles
+
+-- Role: UK_Market
+-- Table filter on mart_country_performance / mart_daily_sales / fact if imported:
+[country] = "United Kingdom"
+
+-- Role: EU_Markets
+[country] IN {
+    "Germany",
+    "France",
+    "Netherlands",
+    "Belgium",
+    "Switzerland",
+    "Spain",
+    "Portugal",
+    "Italy",
+    "Austria",
+    "Sweden",
+    "Finland",
+    "Denmark",
+    "Norway",
+    "Poland",
+    "EIRE",
+    "Channel Islands"
+}
+
+-- Role: Rest_Of_World
+NOT (
+    [country] = "United Kingdom"
+    || [country] IN {
+        "Germany", "France", "Netherlands", "Belgium", "Switzerland",
+        "Spain", "Portugal", "Italy", "Austria", "Sweden", "Finland",
+        "Denmark", "Norway", "Poland", "EIRE", "Channel Islands"
+    }
+)
+
+-- Role: Executive_All
+-- (no filter — full model)
+
+-- Test: Modeling → View as → pick role
+-- Publish: assign AD/Entra groups to roles in Power BI Service workspace

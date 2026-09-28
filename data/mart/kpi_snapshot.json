@@ -1,0 +1,14 @@
+[
+  {
+    "line_rows":1055238,
+    "invoices":53628,
+    "customers":5942,
+    "skus":5131,
+    "countries":43,
+    "gross_sales_gbp":20755215.3299999982,
+    "returns_abs_value":1524161.95,
+    "return_rate_pct":7.34,
+    "aov":494.84,
+    "guest_checkout_pct":23.02
+  }
+]

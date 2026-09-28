@@ -1,0 +1,109 @@
+-- Meridian Retail Command — core DAX measures
+-- Import mart CSVs (or SQLite via ODBC), then paste into Model view → New measure.
+-- Currency column names use GBP (UCI Online Retail II is UK sterling).
+
+-- ===== KPI =====
+Gross Sales GBP =
+SUM ( mart_monthly_trend[sales] )
+
+Returns GBP =
+SUM ( mart_monthly_trend[returns_abs] )
+
+Return Rate % =
+DIVIDE ( [Returns GBP], [Gross Sales GBP], 0 )
+
+Invoices =
+SUM ( mart_monthly_trend[invoices] )
+
+AOV GBP =
+DIVIDE ( [Gross Sales GBP], [Invoices], 0 )
+
+Customers (RFM) =
+DISTINCTCOUNT ( mart_customer_rfm[customer_id] )
+
+-- Snapshot cards (from mart_kpi_snapshot single-row table)
+KPI Gross Sales =
+MAX ( mart_kpi_snapshot[gross_sales_gbp] )
+
+KPI Return Rate =
+MAX ( mart_kpi_snapshot[return_rate_pct] ) / 100
+
+KPI AOV =
+MAX ( mart_kpi_snapshot[aov] )
+
+KPI Guest Checkout % =
+MAX ( mart_kpi_snapshot[guest_checkout_pct] ) / 100
+
+-- ===== Time intelligence on monthly trend =====
+Sales MoM % =
+VAR Cur = [Gross Sales GBP]
+VAR Prev =
+    CALCULATE (
+        [Gross Sales GBP],
+        DATEADD ( mart_monthly_trend[invoice_month].[Date], -1, MONTH )
+    )
+RETURN
+    DIVIDE ( Cur - Prev, Prev, BLANK () )
+
+-- If invoice_month is text YYYY-MM, use a Date table joined on year_month instead of DATEADD.
+-- Pattern with dim_date:
+Sales YTD =
+TOTALYTD ( [Gross Sales GBP], dim_date[full_date] )
+
+-- ===== RFM =====
+Champions Revenue =
+CALCULATE (
+    SUM ( mart_customer_rfm[monetary] ),
+    mart_customer_rfm[rfm_segment] = "Champions"
+)
+
+At Risk Customers =
+CALCULATE (
+    DISTINCTCOUNT ( mart_customer_rfm[customer_id] ),
+    mart_customer_rfm[rfm_segment] = "At risk / hibernating"
+)
+
+Segment Revenue Share % =
+DIVIDE (
+    SUM ( mart_customer_rfm[monetary] ),
+    CALCULATE ( SUM ( mart_customer_rfm[monetary] ), ALL ( mart_customer_rfm[rfm_segment] ) ),
+    0
+)
+
+-- ===== Cohort =====
+Avg M3 Retention % =
+AVERAGEX (
+    FILTER ( mart_cohort_retention, mart_cohort_retention[month_number] = 3 ),
+    mart_cohort_retention[retention_pct]
+) / 100
+
+-- ===== Product Pareto =====
+Top 80 SKU Count =
+CALCULATE (
+    DISTINCTCOUNT ( mart_product_pareto[stock_code] ),
+    mart_product_pareto[is_top80_pct] = 1
+)
+
+SKU Sales Rank =
+RANKX (
+    ALL ( mart_product_pareto[stock_code] ),
+    CALCULATE ( SUM ( mart_product_pareto[sales] ) ),
+    ,
+    DESC,
+    DENSE
+)
+
+-- ===== Country =====
+Country Sales =
+SUM ( mart_country_performance[sales] )
+
+UK Sales Share % =
+DIVIDE (
+    CALCULATE ( [Country Sales], mart_country_performance[country] = "United Kingdom" ),
+    CALCULATE ( [Country Sales], ALL ( mart_country_performance ) ),
+    0
+)
+
+-- ===== Field parameter (Desktop: Modeling → New parameter → Fields) =====
+-- Suggested parameter "KPI Switch": Gross Sales GBP | Return Rate % | AOV GBP | Invoices
+-- Bind a single card/line chart to the parameter for bookmark-style storytelling without custom visuals.

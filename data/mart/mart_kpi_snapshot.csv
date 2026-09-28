@@ -1,0 +1,2 @@
+line_rows,invoices,customers,skus,countries,gross_sales_gbp,returns_abs_value,return_rate_pct,aov,guest_checkout_pct
+1055238,53628,5942,5131,43,20755215.33,1524161.95,7.34,494.84,23.02

@@ -1,0 +1,52 @@
+{
+  "dataset": "UCI Online Retail II",
+  "citation": "Chen, D. (2019). Online Retail II. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+  "company_framing": "Meridian Home & Gift \u2014 UK online retailer (analysis on public UCI Online Retail II)",
+  "generated_at": "2026-09-28T18:38:51.092400Z",
+  "quality": {
+    "rows": 1067371,
+    "columns": [
+      "Invoice",
+      "StockCode",
+      "Description",
+      "Quantity",
+      "InvoiceDate",
+      "Price",
+      "Customer ID",
+      "Country",
+      "source_sheet"
+    ],
+    "null_pct": {
+      "Invoice": 0.0,
+      "StockCode": 0.0,
+      "Description": 0.0041,
+      "Quantity": 0.0,
+      "InvoiceDate": 0.0,
+      "Price": 0.0,
+      "Customer ID": 0.2277,
+      "Country": 0.0,
+      "source_sheet": 0.0
+    },
+    "duplicate_rows": 12133,
+    "invoices": 53628,
+    "stock_codes": 5305,
+    "customers_non_null": 5942,
+    "countries": 43,
+    "date_min": "2009-12-01 07:45:00",
+    "date_max": "2011-12-09 12:50:00",
+    "negative_qty_rows": 22950,
+    "zero_price_rows": 6207,
+    "guest_checkout_rows": 243007
+  },
+  "mart_rows": {
+    "mart_kpi_snapshot": 1,
+    "mart_daily_sales": 3237,
+    "mart_country_performance": 43,
+    "mart_product_pareto": 4210,
+    "mart_customer_rfm": 5942,
+    "mart_cohort_retention": 247,
+    "mart_returns_leakage": 22890,
+    "mart_monthly_trend": 25
+  },
+  "sqlite": "/workspace/northline-command/data/meridian.db"
+}

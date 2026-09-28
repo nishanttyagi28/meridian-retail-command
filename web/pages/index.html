@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meridian Retail Command</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/command.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="top">
+    <div class="brand-block">
+      <p class="brand">Meridian</p>
+      <p class="product">Retail Command</p>
+    </div>
+    <div class="top-meta">
+      <span id="dataset-label">UCI Online Retail II</span>
+      <span class="dot"></span>
+      <span>GBP · Dec 2009–Dec 2011</span>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Views">
+      <button type="button" class="tab active" data-view="pulse">Pulse</button>
+      <button type="button" class="tab" data-view="markets">Markets</button>
+      <button type="button" class="tab" data-view="crm">RFM / CRM</button>
+      <button type="button" class="tab" data-view="cohort">Cohorts</button>
+      <button type="button" class="tab" data-view="assortment">Assortment</button>
+      <button type="button" class="tab" data-view="returns">Returns</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-pulse" class="view active">
+      <div class="intro">
+        <h1>Cash, customers, and leakage — one board view.</h1>
+        <p id="problem-line">
+          Identified customers, guest checkout, and returns on a real UK online gift retail ledger.
+        </p>
+      </div>
+      <div class="kpi-row" id="kpi-row">
+        <div class="kpi skeleton"><span>Loading</span></div>
+      </div>
+      <div class="split">
+        <article class="panel">
+          <header class="panel-h"><h2>Monthly sales vs returns</h2><span class="hint">25 months</span></header>
+          <canvas id="chart-monthly" height="120"></canvas>
+        </article>
+        <article class="panel">
+          <header class="panel-h"><h2>Business read</h2></header>
+          <ul class="insight-list" id="pulse-insights"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-markets" class="view">
+      <div class="split">
+        <article class="panel grow">
+          <header class="panel-h"><h2>Top markets by sales</h2></header>
+          <canvas id="chart-country" height="160"></canvas>
+        </article>
+        <article class="panel">
+          <header class="panel-h"><h2>Scorecard</h2></header>
+          <div class="table-wrap">
+            <table id="table-country">
+              <thead>
+                <tr><th>Country</th><th>Sales</th><th>Return %</th><th>AOV</th><th>Customers</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-crm" class="view">
+      <div class="split">
+        <article class="panel">
+          <header class="panel-h"><h2>Revenue by RFM segment</h2></header>
+          <canvas id="chart-rfm" height="160"></canvas>
+        </article>
+        <article class="panel">
+          <header class="panel-h"><h2>Segment mix</h2></header>
+          <div class="table-wrap">
+            <table id="table-rfm">
+              <thead>
+                <tr><th>Segment</th><th>Customers</th><th>Revenue</th><th>Returns</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+      <article class="panel mt">
+        <header class="panel-h">
+          <h2>High-value, cooling off</h2>
+          <span class="hint">Champions / Loyal / Big spenders · recency &gt; 90 days</span>
+        </header>
+        <div class="table-wrap">
+          <table id="table-atrisk">
+            <thead>
+              <tr><th>Customer</th><th>Segment</th><th>Last buy</th><th>Recency</th><th>Freq</th><th>Monetary</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section id="view-cohort" class="view">
+      <article class="panel">
+        <header class="panel-h">
+          <h2>Monthly cohort retention</h2>
+          <span class="hint">% of cohort still buying in month N</span>
+        </header>
+        <div class="table-wrap heat-wrap">
+          <table id="table-cohort" class="heat">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section id="view-assortment" class="view">
+      <div class="kpi-row" id="pareto-kpis"></div>
+      <div class="split">
+        <article class="panel">
+          <header class="panel-h"><h2>Cumulative sales curve</h2></header>
+          <canvas id="chart-pareto" height="140"></canvas>
+        </article>
+        <article class="panel">
+          <header class="panel-h"><h2>Top SKUs</h2></header>
+          <div class="table-wrap">
+            <table id="table-pareto">
+              <thead>
+                <tr><th>SKU</th><th>Description</th><th>Sales</th><th>Cum %</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-returns" class="view">
+      <div class="split">
+        <article class="panel">
+          <header class="panel-h"><h2>Returns by country</h2></header>
+          <canvas id="chart-returns" height="160"></canvas>
+        </article>
+        <article class="panel">
+          <header class="panel-h"><h2>Largest return lines</h2></header>
+          <div class="table-wrap">
+            <table id="table-returns">
+              <thead>
+                <tr><th>Date</th><th>SKU</th><th>Country</th><th>Qty</th><th>Value</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <p id="error" class="error" hidden></p>
+  </main>
+
+  <footer class="foot">
+    <span id="citation"></span>
+    <span>Star schema · SQL marts · Excel packs · Power BI theme/DAX/RLS in <code>/powerbi</code></span>
+  </footer>
+  <script src="/static/command.js"></script>
+</body>
+</html>
